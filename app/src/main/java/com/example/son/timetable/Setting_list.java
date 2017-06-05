@@ -1,5 +1,6 @@
 package com.example.son.timetable;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,7 +14,7 @@ import android.widget.ListView;
  */
 
 public class Setting_list extends AppCompatActivity{
-    static final String[] List_Menu = {"서비스"};
+    static final String[] List_Menu = {"서비스", "서비스 종료"};
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +32,13 @@ public class Setting_list extends AppCompatActivity{
 
                 if(strText.equals("서비스")){
                     Log.i("aaa", "Service");
-                    //Intent Service_intent = new Intent(this, Setting_service.class);
-                    //startActivity(Service_intent);
+                    Intent Service_intent = new Intent(getApplicationContext(), MyService.class);
+                    startService(Service_intent);
+                }
+                else if(strText.equals("서비스 종료"))
+                {
+                    Intent Service_intent = new Intent(getApplicationContext(), MyService.class);
+                    stopService(Service_intent);
                 }
             }
         });

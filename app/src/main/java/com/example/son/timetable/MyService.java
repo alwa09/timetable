@@ -115,13 +115,7 @@ public class MyService extends Service {
             }
         };
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            return START_NOT_STICKY;
         }
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
                 100, // 통지사이의 최소 시간간격 (miliSecond)
@@ -172,9 +166,11 @@ public class MyService extends Service {
             try {
                 //String s = new GpsToAddress().execute(36.145639, 128.392385).get(); // 주소를 가져옴
                 Log.d("JSON", "위도: " + latitude + " 경도: " + longitude);
-                String s = new GpsToAddress().execute(latitude, longitude).get();
-                Toast.makeText(MyService.this, s, Toast.LENGTH_SHORT).show();
-                Log.d("JSONYO", s);
+                if(latitude != 0 && longitude != 0) {
+                    String s = new GpsToAddress().execute(latitude, longitude).get();
+                    Toast.makeText(MyService.this, s, Toast.LENGTH_SHORT).show();
+                    Log.d("JSONYO", s);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
