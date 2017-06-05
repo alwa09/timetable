@@ -209,7 +209,7 @@ public class MyService extends Service {
                     day = "saturday";
                     break;
             }
-            day = "monday"; // 실험용
+            //day = "monday"; // 실험용
             return day;
         }
 
