@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.son.timetable.TimeTableActivity">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:shrinkColumns="0,1,2,3,4,5">
+        <TableRow
+            android:layout_weight="1">
+            <TextView android:text=""/>
+            <TextView android:text="월요일"/>
+            <TextView android:text="화요일"/>
+            <TextView android:text="수요일"/>
+            <TextView android:text="목요일"/>
+            <TextView android:text="금요일"/>
+        </TableRow>
+        <TableRow
+            android:layout_weight="1">
+            <TextView
+                android:text="1교시"/>
+            <Button android:id="@+id/class1_monday" android:text=""/>
+            <Button android:id="@+id/class1_tuesday" android:text="" />
+            <Button android:id="@+id/class1_wednesday" android:text="" />
+            <Button android:id="@+id/class1_thursday" android:text="" />
+            <Button android:id="@+id/class1_friday" android:text="" />
+        </TableRow>
+        <TableRow
+            android:layout_weight="1">
+            <TextView
+                android:text="2교시"/>
+            <Button android:id="@+id/class2_monday" android:text="" />
+            <Button android:id="@+id/class2_tuesday" android:text="" />
+            <Button android:id="@+id/class2_wednesday" android:text="" />
+            <Button android:id="@+id/class2_thursday" android:text="" />
+            <Button android:id="@+id/class2_friday" android:text="" />
+        </TableRow>
+        <TableRow
+            android:layout_weight="1">
+            <TextView
+                android:text="3교시"/>
+            <Button android:id="@+id/class3_monday" android:text="" />
+            <Button android:id="@+id/class3_tuesday" android:text="" />
+            <Button android:id="@+id/class3_wednesday" android:text="" />
+            <Button android:id="@+id/class3_thursday" android:text="" />
+            <Button android:id="@+id/class3_friday" android:text="" />
+        </TableRow>
+        <TableRow
+            android:layout_weight="1">
+            <TextView
+                android:text="4교시"/>
+            <Button android:id="@+id/class4_monday" android:text="" />
+            <Button android:id="@+id/class4_tuesday" android:text="" />
+            <Button android:id="@+id/class4_wednesday" android:text="" />
+            <Button android:id="@+id/class4_thursday" android:text="" />
+            <Button android:id="@+id/class4_friday" android:text="" />
+        </TableRow>
+        <TableRow
+            android:layout_weight="1">
+            <TextView
+                android:text="5교시"/>
+            <Button android:id="@+id/class5_monday" android:text="" />
+            <Button android:id="@+id/class5_tuesday" android:text="" />
+            <Button android:id="@+id/class5_wednesday" android:text="" />
+            <Button android:id="@+id/class5_thursday" android:text="" />
+            <Button android:id="@+id/class5_friday" android:text="" />
+        </TableRow>
+        <TableRow
+            android:layout_weight="1">
+            <TextView
+                android:text="6교시"/>
+            <Button android:id="@+id/class6_monday" android:text="" />
+            <Button android:id="@+id/class6_tuesday" android:text="" />
+            <Button android:id="@+id/class6_wednesday" android:text="" />
+            <Button android:id="@+id/class6_thursday" android:text="" />
+            <Button android:id="@+id/class6_friday" android:text="" />
+        </TableRow>
+        <TableRow
+            android:layout_weight="1">
+            <TextView
+                android:text="7교시"/>
+            <Button android:id="@+id/class7_monday" android:text="" />
+            <Button android:id="@+id/class7_tuesday" android:text="" />
+            <Button android:id="@+id/class7_wednesday" android:text="" />
+            <Button android:id="@+id/class7_thursday" android:text="" />
+            <Button android:id="@+id/class7_friday" android:text="" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="8교시"/>
+            <Button android:id="@+id/class8_monday" android:text="" />
+            <Button android:id="@+id/class8_tuesday" android:text="" />
+            <Button android:id="@+id/class8_wednesday" android:text="" />
+            <Button android:id="@+id/class8_thursday" android:text="" />
+            <Button android:id="@+id/class8_friday" android:text="" />
+        </TableRow>
+        <TableRow
+            android:layout_weight="1">
+            <TextView
+                android:text="9교시"/>
+            <Button android:id="@+id/class9_monday" android:text="" />
+            <Button android:id="@+id/class9_tuesday" android:text="" />
+            <Button android:id="@+id/class9_wednesday" android:text="" />
+            <Button android:id="@+id/class9_thursday" android:text="" />
+            <Button android:id="@+id/class9_friday" android:text="" />
+        </TableRow>
+        <TableRow
+            android:layout_weight="1">
+            <TextView
+                android:text="A교시"/>
+            <Button android:id="@+id/classA_monday" android:text="" />
+            <Button android:id="@+id/classA_tuesday" android:text="" />
+            <Button android:id="@+id/classA_wednesday" android:text="" />
+            <Button android:id="@+id/classA_thursday" android:text="" />
+            <Button android:id="@+id/classA_friday" android:text="" />
+        </TableRow>
+        <TableRow
+            android:layout_weight="1">
+            <TextView
+                android:text="B교시"/>
+            <Button android:id="@+id/classB_monday" android:text="" />
+            <Button android:id="@+id/classB_tuesday" android:text="" />
+            <Button android:id="@+id/classB_wednesday" android:text="" />
+            <Button android:id="@+id/classB_thursday" android:text="" />
+            <Button android:id="@+id/classB_friday" android:text="" />
+        </TableRow>
+        <TableRow
+            android:layout_weight="1">
+            <TextView
+                android:text="C교시"/>
+            <Button android:id="@+id/classC_monday" android:text="" />
+            <Button android:id="@+id/classC_tuesday" android:text="" />
+            <Button android:id="@+id/classC_wednesday" android:text="" />
+            <Button android:id="@+id/classC_thursday" android:text="" />
+            <Button android:id="@+id/classC_friday" android:text="" />
+        </TableRow>
+        <TableRow
+            android:layout_weight="1">
+            <TextView
+                android:text="D교시"/>
+            <Button android:id="@+id/classD_monday" android:text="" />
+            <Button android:id="@+id/classD_tuesday" android:text="" />
+            <Button android:id="@+id/classD_wednesday" android:text="" />
+            <Button android:id="@+id/classD_thursday" android:text="" />
+            <Button android:id="@+id/classD_friday" android:text="" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
