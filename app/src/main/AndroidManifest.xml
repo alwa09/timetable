@@ -35,5 +35,4 @@
         <activity android:name=".TimeTableActivity"></activity>
         <activity android:name=".rightPlace"></activity>
     </application>
-
 </manifest>

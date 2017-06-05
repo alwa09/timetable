@@ -68,7 +68,7 @@ public class rightPlace extends AppCompatActivity implements GoogleApiClient.OnC
 
     public void start()
     {
-
+        Log.i(LOG_TAG, "start");
         callPlaceDetectionApi();
 
     }

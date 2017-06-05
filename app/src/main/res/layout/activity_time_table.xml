@@ -4,12 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#dfffff"
     tools:context="com.example.son.timetable.TimeTableActivity">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize = "20dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_blue_light"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="시간표"/>
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#dfffff"
         android:shrinkColumns="0,1,2,3,4,5">
         <TableRow
             android:layout_height="50dp">
@@ -23,11 +33,11 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginLeft="3dp"
                 android:layout_width="50dp"/>
-            <TextView android:text="월요일" android:layout_height="25dp" android:background="#77ff77" android:layout_margin="3dp" android:textAlignment="center"/>
-            <TextView android:text="화요일" android:layout_height="25dp" android:background="#77ff77" android:layout_margin="3dp" android:textAlignment="center"/>
-            <TextView android:text="수요일" android:layout_height="25dp" android:background="#77ff77" android:layout_margin="3dp" android:textAlignment="center"/>
-            <TextView android:text="목요일" android:layout_height="25dp" android:background="#77ff77" android:layout_margin="3dp" android:textAlignment="center"/>
-            <TextView android:text="금요일" android:layout_height="25dp" android:background="#77ff77" android:layout_margin="3dp" android:textAlignment="center"/>
+            <TextView android:text="월요일" android:layout_height="25dp" android:background="#77ff77" android:layout_margin="3dp" android:gravity="center"/>
+            <TextView android:text="화요일" android:layout_height="25dp" android:background="#77ff77" android:layout_margin="3dp" android:gravity="center"/>
+            <TextView android:text="수요일" android:layout_height="25dp" android:background="#77ff77" android:layout_margin="3dp" android:gravity="center"/>
+            <TextView android:text="목요일" android:layout_height="25dp" android:background="#77ff77" android:layout_margin="3dp" android:gravity="center"/>
+            <TextView android:text="금요일" android:layout_height="25dp" android:background="#77ff77" android:layout_margin="3dp" android:gravity="center"/>
         </TableRow>
         <TableRow
             android:layout_weight="1">
