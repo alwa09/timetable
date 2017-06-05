@@ -40,7 +40,7 @@ public class rightPlace extends AppCompatActivity implements GoogleApiClient.OnC
         mGoogleApiClient.connect();
 
         start();
-        finish();
+        //finish();
     }
 
     @Override
