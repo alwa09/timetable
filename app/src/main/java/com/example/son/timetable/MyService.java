@@ -195,7 +195,6 @@ public class MyService extends Service {
             return true;
         }
     };
-
 }
 
 
