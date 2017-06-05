@@ -27,6 +27,7 @@
             android:name=".MyService"
             android:enabled="true"
             android:exported="true"></service>
+
         <activity android:name=".TimeTableActivity"></activity>
     </application>
 

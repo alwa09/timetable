@@ -63,14 +63,14 @@ public class TimeTableActivity extends AppCompatActivity {
         alertDialog.setPositiveButton("입력", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                insert(_class, day, edittext.getText().toString());
+                insert(_class, day, edittext.getText().toString());                     // 두번 넣을경우 다 들어간다 중복처리 해줘야함.
                 updateTimeTable();
             }
         });
         alertDialog.setNeutralButton("삭제", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                //db.execSQL("delete from timetble where ");
             }
         });
         alertDialog.show();

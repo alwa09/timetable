@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -23,6 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.media.AudioManager;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     LocationListener locationListener;
@@ -121,8 +127,33 @@ public class MainActivity extends AppCompatActivity {
             //Gps 위치제공자에 의한 위치변화. 오차범위가 좁다.
             //Network 위치제공자에 의한 위치변화
             //Network 위치는 Gps에 비해 정확도가 많이 떨어진다.
+
+            final Geocoder geocoder = new Geocoder(MainActivity.this);          // 현재는 주소를 받아오는 형식
+                                                                                // google place api를 활용하면 장소를 가져올수 있음
+            List<Address> list = null;
+            try {
+                list = geocoder.getFromLocation(
+                        latitude, // 위도
+                        longitude, // 경도
+                        10); // 얻어올 값의 개수
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생");
+            }
+            if (list != null) {
+                if (list.size()==0) {
+                    tv.setText("해당되는 주소 정보는 없습니다");
+                } else {
+                    tv.setText(list.get(0).toString());
+                }
+            }
+
+            TextView addressView = (TextView)findViewById(R.id.address);
+            addressView.setText(list.get(0).toString());
+
             tv.setText("위치정보 : " + provider + "\n위도 : " + longitude + "\n경도 : " + latitude
                     + "\n고도 : " + altitude + "\n정확도 : "  + accuracy);
+
         }
         public void onProviderDisabled(String provider) {
             // Disabled시
@@ -139,6 +170,11 @@ public class MainActivity extends AppCompatActivity {
             Log.d("test", "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
         }
     };
+
+
+
+
+
 
     public void GpsPermissionCheckForMashMallo() {
 
@@ -165,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void gogo(View v)
+    public void gogo(View v)
     {
         Intent intent = new Intent(this, TimeTableActivity.class);
         startActivity(intent);
