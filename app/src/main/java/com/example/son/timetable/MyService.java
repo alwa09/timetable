@@ -6,15 +6,24 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MyService extends Service {
     NotificationManager Notifi_M;
     ServiceThread thread;
     Notification Notifi ;
-
+    SQLiteHelper dbHelper;
+    SQLiteDatabase db;
+    String dbName = "timetable";
+    int dbVersion = 1;
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -23,9 +32,14 @@ public class MyService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Notifi_M = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        dbHelper = new SQLiteHelper(this, dbName, null, dbVersion);
+        db = dbHelper.getReadableDatabase();
+
         myServiceHandler handler = new myServiceHandler();
         thread = new ServiceThread(handler);
         thread.start();
+
         return START_STICKY;
 
     }
@@ -59,7 +73,67 @@ public class MyService extends Service {
             Notifi.flags = Notification.FLAG_AUTO_CANCEL;
             Notifi_M.notify( 777 , Notifi);
             //토스트 띄우기
-            Toast.makeText(MyService.this, "뜸?", Toast.LENGTH_LONG).show();
+
+
+            isShutTime();
+            //Toast.makeText(MyService.this, "yo", Toast.LENGTH_SHORT).show();
+        }
+
+        public String getDayOfWeek() // 요일 구하는 함수
+        {
+            Calendar cal = Calendar.getInstance();
+            String day = null;
+            int nWeek = cal.get(Calendar.DAY_OF_WEEK);
+            switch(nWeek)
+            {
+                case 1:
+                    //day = "sunday";
+                    break;
+                case 2:
+                    day = "monday";
+                    break;
+                case 3:
+                    day = "tuesday";
+                    break;
+                case 4:
+                    day = "wednesday";
+                    break;
+                case 5:
+                    day = "thursday";
+                    break;
+                case 6:
+                    day = "friday";
+                    break;
+                case 7:
+                    //day = "saturday";
+                    break;
+            }
+            return day;
+        }
+
+        public String getTimeClass() // 몇 교시인지 구함
+        {
+            String _class = null;
+            long nowTime = System.currentTimeMillis();
+            Date date = new Date(nowTime);
+            SimpleDateFormat sdfNow = new SimpleDateFormat("HH");
+            String formatDate = sdfNow.format(date);
+
+            int hours = Integer.parseInt(formatDate);
+            hours -= 8;
+            if(hours>0 && hours<10)
+            {
+                _class = "class"+hours;
+            }
+            return _class;
+        }
+
+        public boolean isShutTime()
+        {
+            String _class = getTimeClass();
+            String _day = getDayOfWeek();
+            Toast.makeText(MyService.this, _class+" "+_day, Toast.LENGTH_SHORT).show();
+            return true;
         }
     };
 }

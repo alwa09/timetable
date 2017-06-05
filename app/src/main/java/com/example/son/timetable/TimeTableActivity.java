@@ -88,7 +88,6 @@ public class TimeTableActivity extends AppCompatActivity {
             db.execSQL("update timetable set lecture='"+lecture+"' where class='"+_class+"' and day='"+day+"'");
             Log.d(tag, "update");
         }
-
     }
 
     int checkDup(String _class, String day)
