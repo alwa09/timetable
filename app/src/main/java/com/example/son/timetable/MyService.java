@@ -1,6 +1,7 @@
 package com.example.son.timetable;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -9,6 +10,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -57,8 +59,8 @@ public class MyService extends Service {
     LocationManager mLocationManager;
     myServiceHandler mHandler;
     LocationListener mLocationListener;
-    double longitude;
-    double latitude;
+    //double longitude;
+   // double latitude;
 
     boolean mode_change_flag = false;
     int prev_mode = 0;
@@ -74,7 +76,6 @@ public class MyService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Notifi_M = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         dbHelper = new SQLiteHelper(this, dbName, null, dbVersion);
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         prev_mode = mAudioManager.getMode();
         mHandler = new myServiceHandler();
@@ -83,54 +84,7 @@ public class MyService extends Service {
         } catch (SQLiteException e) {
             Log.d("service", "fail read database");
         }
-        mLocationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                //여기서 위치값이 갱신되면 이벤트가 발생한다.
-                //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
 
-                Log.d("test", "onLocationChanged, location:" + location);
-                longitude = location.getLongitude(); //경도
-                latitude = location.getLatitude();   //위도
-                double altitude = location.getAltitude();   //고도
-                float accuracy = location.getAccuracy();    //정확도
-                String provider = location.getProvider();   //위치제공자
-                //Gps 위치제공자에 의한 위치변화. 오차범위가 좁다.
-                //Network 위치제공자에 의한 위치변화
-                //Network 위치는 Gps에 비해 정확도가 많이 떨어진다.
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-        }
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
-                100, // 통지사이의 최소 시간간격 (miliSecond)
-                1, // 통지사이의 최소 변경거리 (m)
-                mLocationListener);
-        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
-                100, // 통지사이의 최소 시간간격 (miliSecond)
-                1, // 통지사이의 최소 변경거리 (m)
-                mLocationListener);
         thread = new ServiceThread(mHandler);
         thread.start();
 
@@ -150,6 +104,16 @@ public class MyService extends Service {
         public void handleMessage(android.os.Message msg) {
             //Intent intent1 = new Intent(MyService.this, rightPlace.class);
             //rightPlace r = new rightPlace();
+            SharedPreferences pref = getSharedPreferences("location", 0);
+            float longtitude = pref.getFloat("lon", 0);
+            float latitude = pref.getFloat("lat",0);
+
+            double dlongtitude = (double)longtitude;
+            double dlatitude = (double)latitude;
+
+            Log.d("LOCATION", Float.toString(longtitude));
+            Log.d("LOCATION", Float.toString(latitude));
+
             Intent intent = new Intent(MyService.this, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(MyService.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             Notifi = new Notification.Builder(getApplicationContext())
@@ -171,9 +135,8 @@ public class MyService extends Service {
             //토스트 띄우기
             try {
                 //String s = new GpsToAddress().execute(36.145639, 128.392385).get(); // 주소를 가져옴
-                Log.d("JSON", "위도: " + latitude + " 경도: " + longitude);
-                String s = new GpsToAddress().execute(latitude, longitude).get();
-                Toast.makeText(MyService.this, s, Toast.LENGTH_SHORT).show();
+                Log.d("JSON", "위도: " + dlatitude + " 경도: " + dlongtitude);
+                String s = new GpsToAddress().execute(dlatitude, dlongtitude).get();
                 Log.d("JSONYO", s);
             } catch (InterruptedException e) {
                 e.printStackTrace();
