@@ -9,6 +9,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -54,13 +55,14 @@ public class MyService extends Service {
     SQLiteHelper dbHelper;
     SQLiteDatabase db;
     AudioManager mAudioManager;
-    LocationManager mLocationManager;
+
     myServiceHandler mHandler;
-    LocationListener mLocationListener;
+
     double longitude;
     double latitude;
 
     boolean mode_change_flag = false;
+    boolean inSchool = false;
     int prev_mode = 0;
     String dbName = "timetable_db";
     int dbVersion = 1;
@@ -74,7 +76,6 @@ public class MyService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Notifi_M = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         dbHelper = new SQLiteHelper(this, dbName, null, dbVersion);
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         prev_mode = mAudioManager.getMode();
         mHandler = new myServiceHandler();
@@ -83,48 +84,7 @@ public class MyService extends Service {
         } catch (SQLiteException e) {
             Log.d("service", "fail read database");
         }
-        mLocationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                //여기서 위치값이 갱신되면 이벤트가 발생한다.
-                //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
 
-                Log.d("test", "onLocationChanged, location:" + location);
-                longitude = location.getLongitude(); //경도
-                latitude = location.getLatitude();   //위도
-                double altitude = location.getAltitude();   //고도
-                float accuracy = location.getAccuracy();    //정확도
-                String provider = location.getProvider();   //위치제공자
-                //Gps 위치제공자에 의한 위치변화. 오차범위가 좁다.
-                //Network 위치제공자에 의한 위치변화
-                //Network 위치는 Gps에 비해 정확도가 많이 떨어진다.
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return START_NOT_STICKY;
-        }
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
-                100, // 통지사이의 최소 시간간격 (miliSecond)
-                1, // 통지사이의 최소 변경거리 (m)
-                mLocationListener);
-        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
-                100, // 통지사이의 최소 시간간격 (miliSecond)
-                1, // 통지사이의 최소 변경거리 (m)
-                mLocationListener);
         thread = new ServiceThread(mHandler);
         thread.start();
 
@@ -162,12 +122,23 @@ public class MyService extends Service {
             //확인하면 자동으로 알림이 제거 되도록
             Notifi.flags = Notification.FLAG_AUTO_CANCEL;
             Notifi_M.notify(777, Notifi);
+
+            SharedPreferences pref = getSharedPreferences("location", 0);
+            float flongtitude = pref.getFloat("lon", 0);
+            float flatitude = pref.getFloat("lat",0);
+
+            longitude = flongtitude;
+            latitude = flatitude;
             //토스트 띄우기
             try {
                 //String s = new GpsToAddress().execute(36.145639, 128.392385).get(); // 주소를 가져옴
                 Log.d("JSON", "위도: " + latitude + " 경도: " + longitude);
                 if(latitude != 0 && longitude != 0) {
                     String s = new GpsToAddress().execute(latitude, longitude).get();
+                    if(s.contains("금오공과대학교"))
+                    {
+                        inSchool = true;
+                    }
                     Toast.makeText(MyService.this, s, Toast.LENGTH_SHORT).show();
                     Log.d("JSONYO", s);
                 }
@@ -236,7 +207,7 @@ public class MyService extends Service {
             {
                 String query = "select * from timetable where class='" + _class + "' and day='"+_day+"'";
                 Cursor c = db.rawQuery(query, null);
-                if(c.getCount() > 0) // 만약 수업이 있으면
+                if(c.getCount() > 0 && inSchool == true) // 만약 수업이 있고, 학교안에 위치한다면
                 {
                     int current_mode = mAudioManager.getRingerMode();
                     if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
