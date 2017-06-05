@@ -8,7 +8,10 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.media.AudioManager;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -39,7 +42,10 @@ public class MyService extends Service {
     Notification Notifi;
     SQLiteHelper dbHelper;
     SQLiteDatabase db;
-    String dbName = "timetable";
+    AudioManager mAudioManager;
+    boolean mode_change_flag = false;
+    int prev_mode = 0;
+    String dbName = "timetable_db";
     int dbVersion = 1;
 
     @Override
@@ -51,8 +57,16 @@ public class MyService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Notifi_M = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         dbHelper = new SQLiteHelper(this, dbName, null, dbVersion);
-        db = dbHelper.getReadableDatabase();
+        try{
+            db = dbHelper.getReadableDatabase();
+        }
+        catch(SQLiteException e)
+        {
+            Log.d("service", "fail read database");
+        }
 
+        mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        prev_mode = mAudioManager.getMode();
         myServiceHandler handler = new myServiceHandler();
 
         thread = new ServiceThread(handler);
@@ -97,8 +111,7 @@ public class MyService extends Service {
             //토스트 띄우기
 
 
-            isShutTime();
-            //Toast.makeText(MyService.this, "yo", Toast.LENGTH_SHORT).show();
+            isShutTime(); // 시간표대로 모드 전환하는 함수
         }
 
         public String getDayOfWeek() // 요일 구하는 함수
@@ -108,7 +121,7 @@ public class MyService extends Service {
             int nWeek = cal.get(Calendar.DAY_OF_WEEK);
             switch (nWeek) {
                 case 1:
-                    //day = "sunday";
+                    day = "sunday";
                     break;
                 case 2:
                     day = "monday";
@@ -126,9 +139,10 @@ public class MyService extends Service {
                     day = "friday";
                     break;
                 case 7:
-                    //day = "saturday";
+                    day = "saturday";
                     break;
             }
+            //day = "monday"; // 실험용
             return day;
         }
 
@@ -151,7 +165,33 @@ public class MyService extends Service {
         public boolean isShutTime() {
             String _class = getTimeClass();
             String _day = getDayOfWeek();
-            Toast.makeText(MyService.this, _class + " " + _day, Toast.LENGTH_SHORT).show();
+            if(_day != null) // null이면 토요일이나 일요일이라는 거임
+            {
+                String query = "select * from timetable where class='" + _class + "' and day='"+_day+"'";
+                Cursor c = db.rawQuery(query, null);
+                if(c.getCount() > 0) // 만약 수업이 있으면
+                {
+                    int current_mode = mAudioManager.getRingerMode();
+                    if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
+                    {
+                        prev_mode = current_mode;
+                        mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT); // 사일런스 모드로 전환
+                        mode_change_flag = true;
+                        Toast.makeText(MyService.this, "수업중이네요. 사일런스 모드로 전환합니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else // 수업이 없으면
+                {
+                    if(mode_change_flag) // 최초 모드 전환 시만 작동
+                    {
+                        mAudioManager.setRingerMode(prev_mode);
+                        mode_change_flag = false;
+                        Toast.makeText(MyService.this, "수업이 끝났네요. 이전 모드로 전환합니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                //Toast.makeText(MyService.this, _class + " " + _day + " " + c.getCount(), Toast.LENGTH_SHORT).show();
+            }
+            //Toast.makeText(MyService.this, _class + " " + _day, Toast.LENGTH_SHORT).show();
             return true;
         }
     };

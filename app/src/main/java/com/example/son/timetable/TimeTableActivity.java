@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 public class TimeTableActivity extends AppCompatActivity {
     private SQLiteHelper dbHelper;
-    String dbName = "timetble";
+    String dbName = "timetable_db";
     int dbVersion = 1;
     private SQLiteDatabase db;
     String tag = "SQLite";
@@ -26,8 +26,11 @@ public class TimeTableActivity extends AppCompatActivity {
         public void onClick(View v) {
             String button_id = getResources().getResourceName(v.getId());
             String[] values = button_id.split("_");
-            Log.d(tag, values[0] + " " + values[1]);
-            showTimeTableDialog(values[0], values[1]);
+            String day = values[1]; // 요일
+            values = values[0].split("id/");
+            String _class = values[1]; // 교시
+            Log.d(tag, "입력될 값: " + _class + " " + day);
+            showTimeTableDialog(_class, day);
             //insert(values[0], values[1], "테스트");
         }
     };
@@ -47,6 +50,7 @@ public class TimeTableActivity extends AppCompatActivity {
             Log.e(tag, "데이터베이스를 얻어올 수 없음");
             finish();
         }
+
         select();
         updateTimeTable();
         registButtonFunc();
@@ -94,6 +98,7 @@ public class TimeTableActivity extends AppCompatActivity {
     {
         String query = "select * from timetable where class='" + _class + "' and day='"+day+"'";
         Cursor c = db.rawQuery(query, null);
+        Log.d(tag, "dup: " + query);
         Log.d(tag, "dup: "+c.getCount());
         return c.getCount();
     }
@@ -119,10 +124,10 @@ public class TimeTableActivity extends AppCompatActivity {
             String _class = c.getString(1);
             String day = c.getString(2);
             String lecture = c.getString(3);
-            //Log.d(tag, id + " " + _class + " " + day + " " + lecture);
+            Log.d(tag, id + " " + _class + " " + day + " " + lecture);
 
             String button_id = _class +"_"+day;
-            //Log.d(tag, button_id);
+            Log.d(tag, button_id);
             Button btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
             btn.setText(lecture);
         }

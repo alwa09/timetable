@@ -211,8 +211,8 @@ public class MainActivity extends AppCompatActivity {
         NotificationManager notificationManager =
                 (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-                && !notificationManager.isNotificationPolicyAccessGranted()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !notificationManager.isNotificationPolicyAccessGranted())
+        {
 
             Intent intent = new Intent(
                     android.provider.Settings
@@ -222,8 +222,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-        if(mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE ||
-                mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_NORMAL){
+
+        if(mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE || mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_NORMAL)
+        {
             mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
         }
 
