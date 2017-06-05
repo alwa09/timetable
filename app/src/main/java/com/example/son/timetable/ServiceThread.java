@@ -7,7 +7,6 @@ import android.os.Message;
 public class ServiceThread extends Thread{
 
     Handler handler;
-
     boolean isRun = true;
 
 
