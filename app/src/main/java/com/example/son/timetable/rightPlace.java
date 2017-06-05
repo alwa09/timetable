@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -29,13 +30,6 @@ public class rightPlace extends AppCompatActivity implements GoogleApiClient.OnC
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private GoogleApiClient mGoogleApiClient;
     private static final int PERMISSION_REQUEST_CODE = 100;
-
-    public void test()
-    {
-
-    }
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +38,9 @@ public class rightPlace extends AppCompatActivity implements GoogleApiClient.OnC
                 .enableAutoManage(rightPlace.this, GOOGLE_API_CLIENT_ID, this)
                 .build();
         mGoogleApiClient.connect();
+
         start();
+        finish();
     }
 
     @Override
@@ -90,7 +86,14 @@ public class rightPlace extends AppCompatActivity implements GoogleApiClient.OnC
                     Log.i(LOG_TAG, String.format("Place '%s' with " +
                                     "likelihood: %g",
                             placeLikelihood.getPlace().getName(),
-                            placeLikelihood.getLikelihood()));      // likelihood : 유사도 값
+                            placeLikelihood.getLikelihood()));
+
+                    if(placeLikelihood.getPlace().getName().equals("금오공대"))
+                    {
+                        Toast.makeText(getApplicationContext(),"성공",Toast.LENGTH_LONG).show();
+                    }
+
+                    // likelihood : 유사도 값
                     //유사도는 단일 요청에 대해 반환된 장소 목록 내에서 해당 장소가 최적 일치가 될 상대적인 확률을 제공합니다.
                     //다른 요청과는 유사도를 비교할 수 없습니다.
 
