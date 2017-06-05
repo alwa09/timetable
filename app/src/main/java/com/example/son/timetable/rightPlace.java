@@ -30,6 +30,12 @@ public class rightPlace extends AppCompatActivity implements GoogleApiClient.OnC
     private GoogleApiClient mGoogleApiClient;
     private static final int PERMISSION_REQUEST_CODE = 100;
 
+    public void test()
+    {
+
+    }
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +43,8 @@ public class rightPlace extends AppCompatActivity implements GoogleApiClient.OnC
                 .addApi(Places.PLACE_DETECTION_API)
                 .enableAutoManage(rightPlace.this, GOOGLE_API_CLIENT_ID, this)
                 .build();
+        mGoogleApiClient.connect();
+        start();
     }
 
     @Override

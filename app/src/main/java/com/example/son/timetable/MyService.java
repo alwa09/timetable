@@ -50,7 +50,6 @@ public class MyService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Notifi_M = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        right = new rightPlace();
         dbHelper = new SQLiteHelper(this, dbName, null, dbVersion);
         db = dbHelper.getReadableDatabase();
 
@@ -73,6 +72,10 @@ public class MyService extends Service {
     class myServiceHandler extends Handler {
         @Override
         public void handleMessage(android.os.Message msg) {
+
+            Intent intent1 = new Intent(MyService.this, rightPlace.class);
+            startActivity(intent1);
+
             Intent intent = new Intent(MyService.this, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(MyService.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             Notifi = new Notification.Builder(getApplicationContext())
@@ -93,7 +96,7 @@ public class MyService extends Service {
             Notifi_M.notify(777, Notifi);
             //토스트 띄우기
 
-            right.start();
+
             isShutTime();
             //Toast.makeText(MyService.this, "yo", Toast.LENGTH_SHORT).show();
         }

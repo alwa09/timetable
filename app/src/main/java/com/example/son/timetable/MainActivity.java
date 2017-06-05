@@ -227,6 +227,9 @@ public class MainActivity extends AppCompatActivity {
             mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
         }
 
+        Intent intent = new Intent(MainActivity.this, rightPlace.class);
+        startActivity(intent);
+
     }
 
 
