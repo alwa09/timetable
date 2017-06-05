@@ -172,13 +172,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSilent(View v){
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager =
+                (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                && !notificationManager.isNotificationPolicyAccessGranted()) {
+
             Intent intent = new Intent(
                     android.provider.Settings
                             .ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
-            System.out.println("hah");
 
             startActivity(intent);
+        }
+
+        mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        if(mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE ||
+                mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_NORMAL){
+            mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        }
 
     }
 
