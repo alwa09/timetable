@@ -45,6 +45,7 @@ public class MyService extends Service {
             Notifi = new Notification.Builder(getApplicationContext())
                     .setContentTitle("Content Title")
                     .setContentText("Content Text")
+                    .setSmallIcon(R.drawable.logo)
                     .setTicker("알림!!!")
                     .setContentIntent(pendingIntent)
                     .build();

@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         GpsPermissionCheckForMashMallo();
-        checkNotification();
         // Location 제공자에서 정보를 얻어오기(GPS)
         // 1. Location을 사용하기 위한 권한을 얻어와야한다 AndroidManifest.xml
         //     ACCESS_FINE_LOCATION : NETWORK_PROVIDER, GPS_PROVIDER
@@ -159,21 +159,9 @@ public class MainActivity extends AppCompatActivity {
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
-                            finish();
                         }
                     });
             alertDialog.show();
-        }
-    }
-
-    public void checkNotification()
-    {
-        if(Build.VERSION.SDK_INT >= 23) {
-            NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-            if (!notificationManager.isNotificationPolicyAccessGranted()) {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_NOTIFICATION_POLICY}, 1);
-                //this.startActivity(new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS));
-            }
         }
     }
 
@@ -184,19 +172,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSilent(View v){
-        mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-        if(mAudioManager.getRingerMode() != AudioManager.RINGER_MODE_SILENT){
-            mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-        }
-        Toast.makeText(this, "silent", Toast.LENGTH_SHORT).show();
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+            Intent intent = new Intent(
+                    android.provider.Settings
+                            .ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+            System.out.println("hah");
+
+            startActivity(intent);
+
     }
 
 
     public void onVib(View v){
         mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-        if(mAudioManager.getRingerMode() != AudioManager.RINGER_MODE_SILENT ){
+        if(mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT ||
+                mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_NORMAL){
             mAudioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
         }
         Toast.makeText(this, "Vib", Toast.LENGTH_SHORT).show();
     }
+
+
 }
