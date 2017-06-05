@@ -47,7 +47,6 @@ public class TimeTableActivity extends AppCompatActivity {
             Log.e(tag, "데이터베이스를 얻어올 수 없음");
             finish();
         }
-
         select();
         updateTimeTable();
         registButtonFunc();
@@ -70,7 +69,11 @@ public class TimeTableActivity extends AppCompatActivity {
         alertDialog.setNeutralButton("삭제", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //db.execSQL("delete from timetble where ");
+                db.execSQL("delete from timetable where class='"+_class+"' and day='"+day+"'");
+                String button_id = _class +"_"+day;
+                //Log.d(tag, button_id);
+                Button btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
+                btn.setText("");
             }
         });
         alertDialog.show();
@@ -78,9 +81,23 @@ public class TimeTableActivity extends AppCompatActivity {
 
     void insert(String _class, String day, String lecture) // DB에 삽입
     {
-        db.execSQL("insert into timetable VALUES(null, '" + _class + "','" + day + "','" + lecture + "');");
+        if(checkDup(_class, day)==0)
+            db.execSQL("insert into timetable VALUES(null, '" + _class + "','" + day + "','" + lecture + "');");
+        else
+        {
+            db.execSQL("update timetable set lecture='"+lecture+"' where class='"+_class+"' and day='"+day+"'");
+            Log.d(tag, "update");
+        }
+
     }
 
+    int checkDup(String _class, String day)
+    {
+        String query = "select * from timetable where class='" + _class + "' and day='"+day+"'";
+        Cursor c = db.rawQuery(query, null);
+        Log.d(tag, "dup: "+c.getCount());
+        return c.getCount();
+    }
     void select() // 임시 기능임
     {
         Cursor c = db.rawQuery("select * from timetable;", null);
@@ -90,7 +107,7 @@ public class TimeTableActivity extends AppCompatActivity {
             String _class = c.getString(1);
             String day = c.getString(2);
             String lecture = c.getString(3);
-            Log.d(tag, id + " " + _class + " " + day + " " + lecture);
+            //Log.d(tag, id + " " + _class + " " + day + " " + lecture);
         }
     }
 
@@ -103,10 +120,10 @@ public class TimeTableActivity extends AppCompatActivity {
             String _class = c.getString(1);
             String day = c.getString(2);
             String lecture = c.getString(3);
-            Log.d(tag, id + " " + _class + " " + day + " " + lecture);
+            //Log.d(tag, id + " " + _class + " " + day + " " + lecture);
 
             String button_id = _class +"_"+day;
-            Log.d(tag, button_id);
+            //Log.d(tag, button_id);
             Button btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
             btn.setText(lecture);
         }
