@@ -9,6 +9,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,6 +23,7 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -38,8 +40,12 @@ import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
 import com.google.android.gms.location.places.Places;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -47,10 +53,8 @@ import java.util.concurrent.ExecutionException;
 
 
 public class MyService extends Service {
-    NotificationManager Notifi_M;
     ServiceThread thread;
     rightPlace right;
-    Notification Notifi;
     SQLiteHelper dbHelper;
     SQLiteDatabase db;
     AudioManager mAudioManager;
@@ -59,8 +63,9 @@ public class MyService extends Service {
     LocationListener mLocationListener;
     double longitude;
     double latitude;
-
+    ArrayList<String> placeName;
     boolean inSchool = false;
+    boolean inSplace = false;
     boolean mode_change_flag = false;
     int prev_mode = 0;
     String dbName = "timetable_db";
@@ -73,12 +78,13 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Notifi_M = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         dbHelper = new SQLiteHelper(this, dbName, null, dbVersion);
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         prev_mode = mAudioManager.getMode();
         mHandler = new myServiceHandler();
+        placeName = new ArrayList<String>();
+        placeName = getStringArrayPref(getApplicationContext(),"place");
         try {
             db = dbHelper.getReadableDatabase();
         } catch (SQLiteException e) {
@@ -119,16 +125,16 @@ public class MyService extends Service {
             return START_NOT_STICKY;
         }
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
-                1000 * 60 , // 통지사이의 최소 시간간격 (miliSecond)
+                100, // 통지사이의 최소 시간간격 (miliSecond)
                 1, // 통지사이의 최소 변경거리 (m)
                 mLocationListener);
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
-                1000 * 60, // 통지사이의 최소 시간간격 (miliSecond)
+                100, // 통지사이의 최소 시간간격 (miliSecond)
                 1, // 통지사이의 최소 변경거리 (m)
                 mLocationListener);
         thread = new ServiceThread(mHandler);
         thread.start();
-
+        Toast.makeText(getApplicationContext(),"서비스 시작", Toast.LENGTH_LONG).show();
         return START_STICKY;
 
     }
@@ -137,6 +143,9 @@ public class MyService extends Service {
 
     public void onDestroy() {
         thread.stopForever();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        }
+        mLocationManager.removeUpdates(mLocationListener);
         thread = null;//쓰레기 값을 만들어서 빠르게 회수하라고 null을 넣어줌.
     }
 
@@ -147,23 +156,7 @@ public class MyService extends Service {
             //rightPlace r = new rightPlace();
             Intent intent = new Intent(MyService.this, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(MyService.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            Notifi = new Notification.Builder(getApplicationContext())
-                    .setContentTitle("Content Title")
-                    .setContentText("Content Text")
-                    .setSmallIcon(R.drawable.logo)
-                    .setTicker("알림!!!")
-                    .setContentIntent(pendingIntent)
-                    .build();
 
-            //소리추가
-
-            Notifi.defaults = Notification.DEFAULT_SOUND;
-            //알림 소리를 한번만 내도록
-            Notifi.flags = Notification.FLAG_ONLY_ALERT_ONCE;
-            //확인하면 자동으로 알림이 제거 되도록
-            Notifi.flags = Notification.FLAG_AUTO_CANCEL;
-            Notifi_M.notify(777, Notifi);
-            //토스트 띄우기
             try {
                 //String s = new GpsToAddress().execute(36.145639, 128.392385).get(); // 주소를 가져옴
                 Log.d("JSON", "위도: " + latitude + " 경도: " + longitude);
@@ -172,7 +165,18 @@ public class MyService extends Service {
                     if(s.contains("금오공과대학교"))
                     {
                         inSchool = true;
+                        Log.e("SCHOOL","HEYHEY");
                     }
+
+                    for(int i=0; i<placeName.size(); i++)
+                    {
+                        String name = placeName.get(i);
+                        if(s.contains(name))
+                        {
+                            inSplace = true;
+                        }
+                    }
+
                     Toast.makeText(MyService.this, s, Toast.LENGTH_SHORT).show();
                     Log.d("JSONYO", s);
                 }
@@ -249,6 +253,7 @@ public class MyService extends Service {
                         prev_mode = current_mode;
                         mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT); // 사일런스 모드로 전환
                         mode_change_flag = true;
+                        inSchool = false;
                         Toast.makeText(MyService.this, "수업중이네요. 사일런스 모드로 전환합니다.", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -261,12 +266,60 @@ public class MyService extends Service {
                         Toast.makeText(MyService.this, "수업이 끝났네요. 이전 모드로 전환합니다.", Toast.LENGTH_SHORT).show();
                     }
                 }
+                if(inSplace == true) // 지정한 장소 진입시
+                {
+                    int current_mode = mAudioManager.getRingerMode();
+                    if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
+                    {
+                        prev_mode = current_mode;
+                        mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT); // 사일런스 모드로 전환
+                        mode_change_flag = true;
+                        Toast.makeText(MyService.this, "지정한 장소에 있는군요 사일런스 모드로 전환합니다.", Toast.LENGTH_SHORT).show();
+                        inSplace = false;
+                    }
+                }
+
+
                 //Toast.makeText(MyService.this, _class + " " + _day + " " + c.getCount(), Toast.LENGTH_SHORT).show();
+            }else if(inSplace == true) // 지정한 장소 진입시
+            {
+                int current_mode = mAudioManager.getRingerMode();
+                if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
+                {
+                    prev_mode = current_mode;
+                    mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT); // 사일런스 모드로 전환
+                    mode_change_flag = true;
+                    Toast.makeText(MyService.this, "지정한 장소에 있는군요 사일런스 모드로 전환합니다.", Toast.LENGTH_SHORT).show();
+                    inSplace = false;
+
+                }
             }
             //Toast.makeText(MyService.this, _class + " " + _day, Toast.LENGTH_SHORT).show();
             return true;
         }
     };
+
+    private ArrayList<String> getStringArrayPref(Context context, String key)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String json = prefs.getString(key, null);
+        ArrayList<String> urls = new ArrayList<String>();
+        if (json != null)
+        {
+            try
+            {
+                JSONArray a = new JSONArray(json);
+                for (int i = 0; i < a.length(); i++)
+                {
+                    String url = a.optString(i);
+                    urls.add(url);
+                }
+            } catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        } return urls;
+    }
 }
 
 

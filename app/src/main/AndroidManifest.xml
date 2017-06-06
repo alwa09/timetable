@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
 
     <application
@@ -37,6 +36,8 @@
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity android:name=".Setting_service"/>
+        <activity android:name=".RegisterPlace"/>
+        <activity android:name="DeletePlace"/>
         <activity android:name=".Setting_list"/>
         <activity android:name=".rightPlace"></activity>
     </application>

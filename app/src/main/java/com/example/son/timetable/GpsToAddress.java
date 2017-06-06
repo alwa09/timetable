@@ -49,7 +49,7 @@ public class GpsToAddress extends AsyncTask<Double, Void, String>{
         Log.d("JSON", getJSONData());
         JSONObject jobj = new JSONObject(getJSONData());
         JSONArray jarray = (JSONArray)jobj.get("results");
-        jobj = (JSONObject)jarray.get(0);
+        jobj = (JSONObject)jarray.get(1);
         Log.d("JSON", jobj.getString("formatted_address"));
         return jobj.getString("formatted_address");
     }
