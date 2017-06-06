@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/timetable.iml" filepath="$PROJECT_DIR$/timetable.iml" />
-      <module fileurl="file://$PROJECT_DIR$/timetable-8dba833acfceb7757a8ff13243ab3b2ffd29eb62.iml" filepath="$PROJECT_DIR$/timetable-8dba833acfceb7757a8ff13243ab3b2ffd29eb62.iml" />
-      <module fileurl="file://$PROJECT_DIR$/timetable-master.iml" filepath="$PROJECT_DIR$/timetable-master.iml" />
     </modules>
   </component>
 </project>
