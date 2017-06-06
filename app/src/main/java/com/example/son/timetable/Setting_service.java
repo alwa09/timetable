@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -16,6 +17,7 @@ import android.location.LocationManager;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,7 +27,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Setting_service extends AppCompatActivity {
@@ -40,7 +46,6 @@ public class Setting_service extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         GpsPermissionCheckForMashMallo();
         // Location 제공자에서 정보를 얻어오기(GPS)
         // 1. Location을 사용하기 위한 권한을 얻어와야한다 AndroidManifest.xml
@@ -231,6 +236,7 @@ public class Setting_service extends AppCompatActivity {
         }
         Toast.makeText(this, "Vib", Toast.LENGTH_SHORT).show();
     }
+
 
 
 }

@@ -14,7 +14,7 @@ import android.widget.ListView;
  */
 
 public class Setting_list extends AppCompatActivity{
-    static final String[] List_Menu = {"서비스", "서비스 종료"};
+    static final String[] List_Menu = {"서비스", "서비스 종료", "장소 등록", "장소 삭제"};
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +39,14 @@ public class Setting_list extends AppCompatActivity{
                 {
                     Intent Service_intent = new Intent(getApplicationContext(), MyService.class);
                     stopService(Service_intent);
+                }else if(strText.equals("장소 등록"))
+                {
+                    Intent placeRegister = new Intent(getApplicationContext(), RegisterPlace.class);
+                    startActivity(placeRegister);
+                }else if(strText.equals("장소 삭제"))
+                {
+                    Intent placeDelete = new Intent(getApplicationContext(), DeletePlace.class);
+                    startActivity(placeDelete);
                 }
             }
         });
