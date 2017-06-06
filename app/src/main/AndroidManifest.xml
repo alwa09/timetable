@@ -40,5 +40,6 @@
         <activity android:name="DeletePlace"/>
         <activity android:name=".Setting_list"/>
         <activity android:name=".rightPlace"></activity>
+        <activity android:name=".Switch_check"/>
     </application>
 </manifest>
