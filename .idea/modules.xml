@@ -3,10 +3,17 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/timetable.iml" filepath="$PROJECT_DIR$/timetable.iml" />
+=======
+<<<<<<< HEAD
+      <module fileurl="file://$PROJECT_DIR$/timetable.iml" filepath="$PROJECT_DIR$/timetable.iml" />
+=======
+>>>>>>> 357f9e84a9641ddb5dd5e32451d0e02d2ae21eaa
       <module fileurl="file://$PROJECT_DIR$/timetable-master.iml" filepath="$PROJECT_DIR$/timetable-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/timetable1.iml" filepath="$PROJECT_DIR$/timetable1.iml" />
+>>>>>>> 02f41ff47dc6ede777b41e7d19456b31929cee35
     </modules>
   </component>
 </project>
