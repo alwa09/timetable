@@ -134,7 +134,7 @@ public class MyService extends Service {
                 mLocationListener);
         thread = new ServiceThread(mHandler);
         thread.start();
-        Toast.makeText(getApplicationContext(),"서비스 시작", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),"서비스 시작", Toast.LENGTH_SHORT).show();
         return START_STICKY;
 
     }
@@ -147,6 +147,7 @@ public class MyService extends Service {
         }
         mLocationManager.removeUpdates(mLocationListener);
         thread = null;//쓰레기 값을 만들어서 빠르게 회수하라고 null을 넣어줌.
+        Toast.makeText(getApplicationContext(),"서비스 종료", Toast.LENGTH_SHORT).show();
     }
 
     class myServiceHandler extends Handler {
@@ -245,6 +246,7 @@ public class MyService extends Service {
             {
                 String query = "select * from timetable where class='" + _class + "' and day='"+_day+"'";
                 Cursor c = db.rawQuery(query, null);
+                Log.d("aaaa", c.getCount() + "");
                 if(c.getCount() > 0 && inSchool == true) // 만약 수업이 있고 학교에 있으면
                 {
                     int current_mode = mAudioManager.getRingerMode();

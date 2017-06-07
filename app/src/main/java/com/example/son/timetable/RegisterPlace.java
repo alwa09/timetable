@@ -90,6 +90,9 @@ public class RegisterPlace extends AppCompatActivity {
             } else if (resultCode == RESULT_CANCELED) {
                 // Indicates that the activity closed before a selection was made. For example if
                 // the user pressed the back button.
+                finish();
+
+
             }
         }
     }
