@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +31,11 @@ public class DeletePlace extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.deletelist);
         placeName = getStringArrayPref(getApplicationContext(),"place");
-
+        if(placeName.isEmpty())
+        {
+            Toast.makeText(getApplicationContext(),"등록한 장소가 없습니다.",Toast.LENGTH_SHORT).show();
+            finish();
+        }
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, placeName);
         ListView listview = (ListView)findViewById(R.id.setting);
         listview.setAdapter(adapter);
