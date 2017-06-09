@@ -13,7 +13,7 @@
         android:gravity="center"
         android:textSize = "20dp"
         android:textStyle="bold"
-        android:textColor="@android:color/holo_blue_light"
+        android:textColor="@android:color/black"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:text="시간표"/>
@@ -166,19 +166,11 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_width="50dp"/>
-<<<<<<< HEAD
             <Button android:id="@+id/class9_monday" android:textSize="10dp" android:background="@drawable/empty_button" android:text="" />
             <Button android:id="@+id/class9_tuesday" android:textSize="10dp" android:background="@drawable/empty_button" android:text="" />
             <Button android:id="@+id/class9_wednesday" android:textSize="10dp" android:background="@drawable/empty_button" android:text="" />
             <Button android:id="@+id/class9_thursday" android:textSize="10dp" android:background="@drawable/empty_button" android:text="" />
             <Button android:id="@+id/class9_friday" android:textSize="10dp" android:background="@drawable/empty_button" android:text="" />
-=======
-            <Button android:id="@+id/class9_monday" android:textSize="10dp" android:layout_margin="3dp" android:background="@android:color/white" android:text="" />
-            <Button android:id="@+id/class9_tuesday" android:textSize="10dp" android:layout_margin="3dp" android:background="@android:color/white" android:text="" />
-            <Button android:id="@+id/class9_wednesday" android:textSize="10dp" android:layout_margin="3dp" android:background="@android:color/white" android:text="" />
-            <Button android:id="@+id/class9_thursday" android:textSize="10dp" android:layout_margin="3dp" android:background="@android:color/white" android:text="" />
-            <Button android:id="@+id/class9_friday" android:textSize="10dp" android:layout_margin="3dp" android:background="@android:color/white" android:text="" />
->>>>>>> a97efbd748eff0481b43a6d349ac18c49d9c9bcd
         </TableRow>
     </TableLayout>
 </LinearLayout>
