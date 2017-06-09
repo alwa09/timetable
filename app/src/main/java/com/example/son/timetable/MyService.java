@@ -1,21 +1,15 @@
 package com.example.son.timetable;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,31 +18,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.places.PlaceLikelihood;
-import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
-import com.google.android.gms.location.places.Places;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -136,7 +116,6 @@ public class MyService extends Service {
         thread.start();
         Toast.makeText(getApplicationContext(),"서비스 시작", Toast.LENGTH_SHORT).show();
         return START_STICKY;
-
     }
 
     //서비스가 종료될 때 할 작업
@@ -153,13 +132,10 @@ public class MyService extends Service {
     class myServiceHandler extends Handler {
         @Override
         public void handleMessage(android.os.Message msg) {
-            //Intent intent1 = new Intent(MyService.this, rightPlace.class);
-            //rightPlace r = new rightPlace();
             Intent intent = new Intent(MyService.this, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(MyService.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             try {
-                //String s = new GpsToAddress().execute(36.145639, 128.392385).get(); // 주소를 가져옴
                 Log.d("JSON", "위도: " + latitude + " 경도: " + longitude);
                 if(latitude != 0 && longitude != 0) {
                     String s = new GpsToAddress().execute(latitude, longitude).get();
@@ -186,7 +162,6 @@ public class MyService extends Service {
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-
             isShutTime(); // 시간표대로 모드 전환하는 함수
         }
 
@@ -219,7 +194,6 @@ public class MyService extends Service {
                     day = "saturday";
                     break;
             }
-            //day = "monday"; // 실험용
             return day;
         }
 
@@ -280,9 +254,6 @@ public class MyService extends Service {
                         inSplace = false;
                     }
                 }
-
-
-                //Toast.makeText(MyService.this, _class + " " + _day + " " + c.getCount(), Toast.LENGTH_SHORT).show();
             }else if(inSplace == true) // 지정한 장소 진입시
             {
                 int current_mode = mAudioManager.getRingerMode();
@@ -296,7 +267,6 @@ public class MyService extends Service {
 
                 }
             }
-            //Toast.makeText(MyService.this, _class + " " + _day, Toast.LENGTH_SHORT).show();
             return true;
         }
     };
@@ -323,6 +293,3 @@ public class MyService extends Service {
         } return urls;
     }
 }
-
-
-

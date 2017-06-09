@@ -7,7 +7,6 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -17,7 +16,6 @@ import android.location.LocationManager;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,11 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Setting_service extends AppCompatActivity {
@@ -171,11 +165,6 @@ public class Setting_service extends AppCompatActivity {
         }
     };
 
-
-
-
-
-
     public void GpsPermissionCheckForMashMallo() {
 
         //마시멜로우 버전 이하면 if문에 걸리지 않습니다.
@@ -224,9 +213,7 @@ public class Setting_service extends AppCompatActivity {
 
         Intent intent = new Intent(Setting_service.this, rightPlace.class);
         startActivity(intent);
-
     }
-
 
     public void onVib(View v){
         mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
@@ -236,7 +223,4 @@ public class Setting_service extends AppCompatActivity {
         }
         Toast.makeText(this, "Vib", Toast.LENGTH_SHORT).show();
     }
-
-
-
 }

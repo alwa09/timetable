@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
             String _class = values[1]; // 교시
             Log.d(tag, "입력될 값: " + _class + " " + day);
             showTimeTableDialog(_class, day);
-            //insert(values[0], values[1], "테스트");
         }
     };
     @Override
@@ -89,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 db.execSQL("delete from timetable where class='"+_class+"' and day='"+day+"'");
                 String button_id = _class +"_"+day;
-                //Log.d(tag, button_id);
                 Button btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
                 btn.setText("");
             }
@@ -174,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
             String _class = c.getString(1);
             String day = c.getString(2);
             String lecture = c.getString(3);
-            //Log.d(tag, id + " " + _class + " " + day + " " + lecture);
         }
     }
 

@@ -5,7 +5,6 @@ import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,8 +16,8 @@ import android.widget.Toast;
  */
 
 public class Setting_list extends AppCompatActivity{
-    static final String[] List_Menu = {"서비스", "서비스 종료", "장소 등록", "장소 삭제"};
-    int serviceCheck = 0;
+    static final String[] List_Menu = {"서비스 시작", "서비스 종료", "장소 등록", "장소 삭제"};
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting);
@@ -32,12 +31,11 @@ public class Setting_list extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String strText = (String)parent.getItemAtPosition(position);
-                if(strText.equals("서비스")){
+                if(strText.equals("서비스 시작")){
                     if(!isServiceRunningCheck())
                     {
                         Intent Service_intent = new Intent(getApplicationContext(), MyService.class);
                         startService(Service_intent);
-                        serviceCheck = 1;
                     }
                     else
                         Toast.makeText(getApplicationContext(),"이미 서비스가 실행중입니다", Toast.LENGTH_SHORT).show();
@@ -46,8 +44,6 @@ public class Setting_list extends AppCompatActivity{
                 {
                     Intent Service_intent = new Intent(getApplicationContext(), MyService.class);
                     stopService(Service_intent);
-                    serviceCheck = 0;
-
                 }else if(strText.equals("장소 등록"))
                 {
                     Intent placeRegister = new Intent(getApplicationContext(), RegisterPlace.class);
@@ -64,7 +60,6 @@ public class Setting_list extends AppCompatActivity{
     public boolean isServiceRunningCheck() {
         ActivityManager manager = (ActivityManager) this.getSystemService(Activity.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            Log.d("aaaa", "service: " + service.service.getClassName());
             if ("com.example.son.timetable.MyService".equals(service.service.getClassName())) {
                 return true;
             }
