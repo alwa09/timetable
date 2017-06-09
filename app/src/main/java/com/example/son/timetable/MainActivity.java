@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         sql = "create table timetable(id INTEGER PRIMARY KEY AUTOINCREMENT, class TEXT, day TEXT, lecture TEXT, color INTEGER);";
         db.execSQL(sql);
         ///////////////////////////
-        
+
         select();
         updateTimeTable();
         registButtonFunc();
@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 Button btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
                 btn.setText("");
                 btn.setBackgroundColor(Color.WHITE);
+                td.dismiss();
             }
         });
         td.show();
