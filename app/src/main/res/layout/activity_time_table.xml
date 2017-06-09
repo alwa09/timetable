@@ -200,53 +200,5 @@
             <Button android:id="@+id/class9_thursday" android:textSize="10dp" android:layout_margin="3dp" android:background="@android:color/white" android:text="" />
             <Button android:id="@+id/class9_friday" android:textSize="10dp" android:layout_margin="3dp" android:background="@android:color/white" android:text="" />
         </TableRow>
-        <TableRow
-            android:layout_weight="1">
-            <TextView
-                android:text="A교시"
-                android:textAlignment="center"
-                android:textSize="10dp"/>
-            <Button android:id="@+id/classA_monday" android:text="" />
-            <Button android:id="@+id/classA_tuesday" android:text="" />
-            <Button android:id="@+id/classA_wednesday" android:text="" />
-            <Button android:id="@+id/classA_thursday" android:text="" />
-            <Button android:id="@+id/classA_friday" android:text="" />
-        </TableRow>
-        <TableRow
-            android:layout_weight="1">
-            <TextView
-                android:text="B교시"
-                android:textAlignment="center"
-                android:textSize="10dp"/>
-            <Button android:id="@+id/classB_monday" android:text="" />
-            <Button android:id="@+id/classB_tuesday" android:text="" />
-            <Button android:id="@+id/classB_wednesday" android:text="" />
-            <Button android:id="@+id/classB_thursday" android:text="" />
-            <Button android:id="@+id/classB_friday" android:text="" />
-        </TableRow>
-        <TableRow
-            android:layout_weight="1">
-            <TextView
-                android:text="C교시"
-                android:textAlignment="center"
-                android:textSize="10dp"/>
-            <Button android:id="@+id/classC_monday" android:text="" />
-            <Button android:id="@+id/classC_tuesday" android:text="" />
-            <Button android:id="@+id/classC_wednesday" android:text="" />
-            <Button android:id="@+id/classC_thursday" android:text="" />
-            <Button android:id="@+id/classC_friday" android:text="" />
-        </TableRow>
-        <TableRow
-            android:layout_weight="1">
-            <TextView
-                android:text="D교시"
-                android:textAlignment="center"
-                android:textSize="10dp"/>
-            <Button android:id="@+id/classD_monday" android:text="" />
-            <Button android:id="@+id/classD_tuesday" android:text="" />
-            <Button android:id="@+id/classD_wednesday" android:text="" />
-            <Button android:id="@+id/classD_thursday" android:text="" />
-            <Button android:id="@+id/classD_friday" android:text="" />
-        </TableRow>
     </TableLayout>
 </LinearLayout>
