@@ -62,7 +62,6 @@ public class TimeInputDialog extends Dialog {
         mNegativeBtn = (Button)findViewById(R.id.timeinput_negative);
         mDeleteBtn = (Button)findViewById(R.id.timeinput_delete);
         mSelectedColor = (TextView)findViewById(R.id.timeinput_selected_color);
-
         mPositiveBtn.setOnClickListener(mPositiveListener);
         mNegativeBtn.setOnClickListener(mNegativeListener);
         mDeleteBtn.setOnClickListener(mDeleteListener);

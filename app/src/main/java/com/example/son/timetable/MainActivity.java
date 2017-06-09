@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         /////////////////////////// 나중에 지우기
         String sql = "drop table timetable";
         db.execSQL(sql);
-        sql = "create table timetable(id INTEGER PRIMARY KEY AUTOINCREMENT, class TEXT, day TEXT, lecture TEXT, color INTEGER);";
+        sql = "create table timetable(id INTEGER PRIMARY KEY AUTOINCREMENT, class TEXT, day TEXT, lecture TEXT, color INTEGER, refer INTEGER);";
         db.execSQL(sql);
         ///////////////////////////
 
@@ -100,9 +100,11 @@ public class MainActivity extends AppCompatActivity {
         td.setPositiveButton(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                insert(_class, day, td.getLecture(), td.getTableColor());                     // 두번 넣을경우 다 들어간다 중복처리 해줘야함.
+                insert(_class, day, td.getLecture(), td.getTableColor());
                 updateTimeTable();
+                mergeTable(day);
                 td.dismiss();
+                showDatabase();
             }
         });
         td.setNegativeButton(new View.OnClickListener(){
@@ -114,24 +116,43 @@ public class MainActivity extends AppCompatActivity {
         td.setDeleteButton(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                db.execSQL("delete from timetable where class='"+_class+"' and day='"+day+"'");
-                String button_id = _class +"_"+day;
-                Button btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
-                btn.setText("");
-                btn.setBackgroundColor(Color.WHITE);
+                delete(_class, day);
                 td.dismiss();
+                showDatabase();
             }
         });
         td.show();
     }
-
+    void delete(String _class, String day)
+    {
+        String query = "select id from timetable where class='" + _class + "' and day='" + day + "';";
+        Cursor c = db.rawQuery(query, null);
+        int id = -99;
+        while(c.moveToNext())
+        {
+            id = c.getInt(0);
+        }
+        db.execSQL("delete from timetable where refer="+id+";");
+        updateTimeTable();
+        mergeTable(day);
+    }
     void insert(String _class, String day, String lecture, int color) // DB에 삽입
     {
         if(checkDup(_class, day)==0)
-            db.execSQL("insert into timetable VALUES(null, '" + _class + "','" + day + "','" + lecture + "'," + color + ");");
+        {
+            db.execSQL("insert into timetable VALUES(null, '" + _class + "','" + day + "','" + lecture + "'," + color + ", null);");
+            String query = "select id from timetable where class='" + _class + "' and day='" + day + "';";
+            Cursor c = db.rawQuery(query, null);
+            while(c.moveToNext())
+            {
+                int id = c.getInt(0);
+                query = "update timetable set refer=" + id + " where class='" + _class + "' and day='" + day + "';";
+                db.execSQL(query);
+            }
+        }
         else
         {
-            db.execSQL("update timetable set lecture='"+lecture+"' where class='"+_class+"' and day='"+day+"'");
+            db.execSQL("update timetable set lecture='"+lecture+"', color=" + color + " where class='"+_class+"' and day='"+day+"'");
             Log.d(tag, "update");
         }
     }
@@ -157,8 +178,52 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    void showDatabase()
+    {
+        Cursor c = db.rawQuery("select * from timetable;", null);
+        while(c.moveToNext()) {
+            int id = c.getInt(0);
+            String _class = c.getString(1);
+            String day = c.getString(2);
+            String lecture = c.getString(3);
+            int color = c.getInt(4);
+            int refer = c.getInt(5);
+            Log.d("YOYOSQL", id + " " + _class + " " + day + " " + lecture + " " + color + " " + refer);
+        }
+    }
     void updateTimeTable()
     {
+        String button_id;
+        Button btn;
+        for(int i=1; i<10; i++)
+        {
+            button_id = "class" + i +"_"+ "monday";
+            btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
+            btn.setText("");
+            btn.setEnabled(true);
+            btn.setBackgroundResource(R.drawable.empty_button);
+            button_id = "class" + i +"_"+ "tuesday";
+            btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
+            btn.setText("");
+            btn.setEnabled(true);
+            btn.setBackgroundResource(R.drawable.empty_button);
+            button_id = "class" + i +"_"+ "wednesday";
+            btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
+            btn.setText("");
+            btn.setEnabled(true);
+            btn.setBackgroundResource(R.drawable.empty_button);
+            button_id = "class" + i +"_"+ "thursday";
+            btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
+            btn.setText("");
+            btn.setEnabled(true);
+            btn.setBackgroundResource(R.drawable.empty_button);
+            button_id = "class" + i +"_"+ "friday";
+            btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
+            btn.setText("");
+            btn.setEnabled(true);
+            btn.setBackgroundResource(R.drawable.empty_button);
+        }
+
         Cursor c = db.rawQuery("select * from timetable;", null);
         while(c.moveToNext())
         {
@@ -167,11 +232,12 @@ public class MainActivity extends AppCompatActivity {
             String day = c.getString(2);
             String lecture = c.getString(3);
             int color = c.getInt(4);
-
-            String button_id = _class +"_"+day;
-            Button btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
+            int refer = c.getInt(5);
+            button_id = _class +"_"+day;
+            btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
             btn.setText(lecture);
             btn.setBackgroundColor(color);
+            btn.setEnabled(true);
         }
     }
 
@@ -196,6 +262,55 @@ public class MainActivity extends AppCompatActivity {
             button_id = "class" + i +"_"+ "friday";
             btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
             btn.setOnClickListener(tableClickListener);
+        }
+    }
+
+    private void mergeTable(String day)
+    {
+        String query = "select * from timetable where day='" + day + "' order by class ASC;";
+        Cursor c = db.rawQuery(query, null);
+        int prevRefer = -99;
+        int prevColor = 0;
+        int prevNumber = -99;
+        String prevLecture = null;
+        while(c.moveToNext())
+        {
+            int id = c.getInt(0);
+            String _class = c.getString(1);
+            String _day = c.getString(2);
+            String lecture = c.getString(3);
+            int color = c.getInt(4);
+            int refer = c.getInt(5);
+
+            String classNumbers[] = _class.split("class");
+            int classNumber = new Integer(classNumbers[1]);
+
+            if((prevColor == color && prevNumber == (classNumber - 1)) || (prevLecture != null && lecture.equals(prevLecture) && prevNumber == (classNumber - 1)))
+            {
+                //Log.d("YOYOSQL", "MERGE");
+                String button_id = _class + "_" + _day;
+                Button btn = (Button) findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
+                btn.setText("");
+                btn.setEnabled(false);
+                btn.setBackgroundColor(prevColor);
+                query = "update timetable set lecture='" + prevLecture + "', refer=" + prevRefer + ", color=" + prevColor + " where class='" + _class + "' and day='" + _day + "'";
+                lecture = prevLecture;
+                refer = prevRefer;
+                color = prevColor;
+                //Log.d("YOYOSQL", query);
+                db.execSQL(query);
+            }
+            else
+            {
+                query = "update timetable set refer=" + id + " where class='" + _class + "' and day='" + _day + "'";
+                refer = id;
+                db.execSQL(query);
+            }
+            prevRefer = refer;
+            prevNumber = classNumber;
+            prevColor = color;
+            prevLecture = lecture;
+            //Log.d("YOYOSQL", _class + " " + _day + " " + lecture);
         }
     }
 
