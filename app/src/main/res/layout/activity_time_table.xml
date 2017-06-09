@@ -165,7 +165,8 @@
             <Button android:id="@+id/class7_thursday" android:textSize="10dp" android:layout_margin="3dp" android:background="@android:color/white" android:text="" />
             <Button android:id="@+id/class7_friday" android:textSize="10dp" android:layout_margin="3dp" android:background="@android:color/white" android:text="" />
         </TableRow>
-        <TableRow>
+        <TableRow
+            android:layout_weight="1">
             <TextView
                 android:text="8교시"
                 android:textSize="10dp"
