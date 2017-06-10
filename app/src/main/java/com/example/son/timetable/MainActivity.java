@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_table);
+        Toolbar toolbar= (Toolbar)findViewById(R.id.action_bar);
+        if (toolbar!= null){
+            toolbar.setTitleTextColor(Color.BLACK);
+        }
         startActivity(new Intent(this, SplashActivity.class));
         GpsPermissionCheckForMashMallo();
 
