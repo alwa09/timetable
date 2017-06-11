@@ -226,7 +226,7 @@ public class MyService extends Service {
             {
                 String query = "select * from timetable where class='" + _class + "' and day='"+_day+"'";
                 Cursor c = db.rawQuery(query, null);
-                if(c.getCount() > 0 && inSchool == true) // 만약 수업이 있고 학교에 있거나 지정된 장소에 있으면
+                if(c.getCount() > 0 && inSchool == true) // 만약 수업이 있고 학교에 있으면
                 {
                     int current_mode = mAudioManager.getRingerMode();
                     if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
@@ -236,7 +236,8 @@ public class MyService extends Service {
                         mode_change_flag = true;
                         Toast.makeText(MyService.this, "음소거로 전환합니다.", Toast.LENGTH_SHORT).show();
                     }
-                }else if(inSplace == true)
+                }
+                else if(inSplace == true) // 만약 지정된 장소에 있으면
                 {
                     int current_mode = mAudioManager.getRingerMode();
                     if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
@@ -257,9 +258,10 @@ public class MyService extends Service {
                     }
                 }
 
-            }else
+            }
+            else // 휴일 일때
             {
-                if(inSplace == true)
+                if(inSplace == true) // 만약 지정된 장소에 있으면
                 {
                     int current_mode = mAudioManager.getRingerMode();
                     if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
@@ -269,7 +271,8 @@ public class MyService extends Service {
                         mode_change_flag = true;
                         Toast.makeText(MyService.this, "음소거로 전환합니다.", Toast.LENGTH_SHORT).show();
                     }
-                }else
+                }
+                else
                 {
                     if(mode_change_flag) // 최초 모드 전환 시만 작동
                     {
