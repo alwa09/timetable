@@ -6,8 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <application
         android:allowBackup="true"
@@ -19,6 +19,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDDENdzmF9rEPOyqiZJs8PYqKaNivuO-kM" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,20 +27,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".MyService"
             android:enabled="true"
-            android:exported="true"></service>
-        <activity android:name=".SplashActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:exported="true" />
 
-        <activity android:name=".Setting_service"/>
-        <activity android:name=".RegisterPlace"/>
-        <activity android:name=".DeletePlace"/>
-        <activity android:name=".Setting_list"/>
-        <activity android:name=".rightPlace"></activity>
-        <activity android:name=".Switch_check"/>
+        <activity
+            android:name=".SplashActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name=".Setting_service" />
+        <activity android:name=".RegisterPlace" />
+        <activity android:name=".DeletePlace" />
+        <activity android:name=".Setting_list" />
+        <activity android:name=".rightPlace" />
+        <activity android:name=".Switch_check" />
+        <activity android:name=".PlaceListActivity"></activity>
     </application>
+
 </manifest>

@@ -78,9 +78,9 @@ public class MyService extends Service {
                 Log.d("test", "onLocationChanged, location:" + location);
                 longitude = location.getLongitude(); //경도
                 latitude = location.getLatitude();   //위도
-                double altitude = location.getAltitude();   //고도
-                float accuracy = location.getAccuracy();    //정확도
-                String provider = location.getProvider();   //위치제공자
+                //double altitude = location.getAltitude();   //고도
+                //float accuracy = location.getAccuracy();    //정확도
+                //String provider = location.getProvider();   //위치제공자
                 //Gps 위치제공자에 의한 위치변화. 오차범위가 좁다.
                 //Network 위치제공자에 의한 위치변화
                 //Network 위치는 Gps에 비해 정확도가 많이 떨어진다.
@@ -142,7 +142,10 @@ public class MyService extends Service {
                     if(s.contains("금오공과대학교"))
                     {
                         inSchool = true;
-                        Log.e("SCHOOL","HEYHEY");
+                    }
+                    else
+                    {
+                        inSchool = false;
                     }
 
                     for(int i=0; i<placeName.size(); i++)
@@ -151,11 +154,15 @@ public class MyService extends Service {
                         if(s.contains(name))
                         {
                             inSplace = true;
+                            break;
+                        }
+                        else
+                        {
+                            inSplace = false;
                         }
                     }
 
                     Toast.makeText(MyService.this, s, Toast.LENGTH_SHORT).show();
-                    Log.d("JSONYO", s);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -220,8 +227,7 @@ public class MyService extends Service {
             {
                 String query = "select * from timetable where class='" + _class + "' and day='"+_day+"'";
                 Cursor c = db.rawQuery(query, null);
-                Log.d("aaaa", c.getCount() + "");
-                if(c.getCount() > 0 && inSchool == true) // 만약 수업이 있고 학교에 있으면
+                if(c.getCount() > 0 && (inSchool || inSplace)) // 만약 수업이 있고 학교에 있거나 지정된 장소에 있으면
                 {
                     int current_mode = mAudioManager.getRingerMode();
                     if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
@@ -229,42 +235,17 @@ public class MyService extends Service {
                         prev_mode = current_mode;
                         mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT); // 사일런스 모드로 전환
                         mode_change_flag = true;
-                        inSchool = false;
-                        Toast.makeText(MyService.this, "수업중이네요. 사일런스 모드로 전환합니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyService.this, "음소거로 전환합니다.", Toast.LENGTH_SHORT).show();
                     }
                 }
-                else // 수업이 없으면
+                else // 그게 아니라면
                 {
                     if(mode_change_flag) // 최초 모드 전환 시만 작동
                     {
                         mAudioManager.setRingerMode(prev_mode);
                         mode_change_flag = false;
-                        Toast.makeText(MyService.this, "수업이 끝났네요. 이전 모드로 전환합니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyService.this, "이전 모드로 전환합니다.", Toast.LENGTH_SHORT).show();
                     }
-                }
-                if(inSplace == true) // 지정한 장소 진입시
-                {
-                    int current_mode = mAudioManager.getRingerMode();
-                    if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
-                    {
-                        prev_mode = current_mode;
-                        mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT); // 사일런스 모드로 전환
-                        mode_change_flag = true;
-                        Toast.makeText(MyService.this, "지정한 장소에 있는군요 사일런스 모드로 전환합니다.", Toast.LENGTH_SHORT).show();
-                        inSplace = false;
-                    }
-                }
-            }else if(inSplace == true) // 지정한 장소 진입시
-            {
-                int current_mode = mAudioManager.getRingerMode();
-                if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
-                {
-                    prev_mode = current_mode;
-                    mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT); // 사일런스 모드로 전환
-                    mode_change_flag = true;
-                    Toast.makeText(MyService.this, "지정한 장소에 있는군요 사일런스 모드로 전환합니다.", Toast.LENGTH_SHORT).show();
-                    inSplace = false;
-
                 }
             }
             return true;

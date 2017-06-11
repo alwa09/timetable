@@ -75,29 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
     void showTimeTableDialog(final String _class, final String day) // 입력창 띄우기
     {
-        /*
-        final EditText edittext = new EditText(this);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("시간표 입력");
-        alertDialog.setMessage("시간표를 입력하세요.");
-        alertDialog.setView(edittext);
-        alertDialog.setPositiveButton("입력", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                insert(_class, day, edittext.getText().toString());                     // 두번 넣을경우 다 들어간다 중복처리 해줘야함.
-                updateTimeTable();
-            }
-        });
-        alertDialog.setNeutralButton("삭제", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                db.execSQL("delete from timetable where class='"+_class+"' and day='"+day+"'");
-                String button_id = _class +"_"+day;
-                Button btn = (Button)findViewById(getResources().getIdentifier(button_id, "id", getPackageName()));
-                btn.setText("");
-            }
-        });
-        alertDialog.show();*/
         final TimeInputDialog td = new TimeInputDialog(this);
 
         td.setPositiveButton(new View.OnClickListener(){
@@ -105,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 insert(_class, day, td.getLecture(), td.getTableColor());
                 updateTimeTable();
-                mergeTable(day);
                 td.dismiss();
                 showDatabase();
             }
@@ -137,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         }
         db.execSQL("delete from timetable where refer="+id+";");
         updateTimeTable();
-        mergeTable(day);
     }
     void insert(String _class, String day, String lecture, int color) // DB에 삽입
     {
@@ -241,6 +216,11 @@ public class MainActivity extends AppCompatActivity {
             btn.setBackgroundColor(color);
             btn.setEnabled(true);
         }
+        mergeTable("monday");
+        mergeTable("tuesday");
+        mergeTable("wednesday");
+        mergeTable("thursday");
+        mergeTable("friday");
     }
 
     void registButtonFunc()

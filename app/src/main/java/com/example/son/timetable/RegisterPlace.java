@@ -32,6 +32,8 @@ import java.util.ArrayList;
 
 public class RegisterPlace extends AppCompatActivity {
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
+    final int REQUEST_CODE_REGISTED = 100;
+    final int REQUEST_CODE_CANCELED = 101;
     public ArrayList<String>placeName = new ArrayList<String>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class RegisterPlace extends AppCompatActivity {
                 Log.i("TAG", "Place Selected: " + place.getName());
                 placeName.add(place.getName().toString());
                 setStringArrayPref(getApplicationContext(),"place",placeName);
+                setResult(REQUEST_CODE_REGISTED);
                 finish();
 
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
@@ -81,6 +84,7 @@ public class RegisterPlace extends AppCompatActivity {
             } else if (resultCode == RESULT_CANCELED) {
                 // Indicates that the activity closed before a selection was made. For example if
                 // the user pressed the back button.
+                setResult(REQUEST_CODE_CANCELED);
                 finish();
             }
         }
