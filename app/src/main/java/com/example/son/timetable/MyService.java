@@ -105,11 +105,11 @@ public class MyService extends Service {
             return START_NOT_STICKY;
         }
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
-                100, // 통지사이의 최소 시간간격 (miliSecond)
+                1000 * 60 * 2, // 통지사이의 최소 시간간격 (miliSecond)
                 1, // 통지사이의 최소 변경거리 (m)
                 mLocationListener);
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
-                100, // 통지사이의 최소 시간간격 (miliSecond)
+                1000 * 60 * 2, // 통지사이의 최소 시간간격 (miliSecond)
                 1, // 통지사이의 최소 변경거리 (m)
                 mLocationListener);
         thread = new ServiceThread(mHandler);
@@ -139,7 +139,7 @@ public class MyService extends Service {
                 Log.d("JSON", "위도: " + latitude + " 경도: " + longitude);
                 if(latitude != 0 && longitude != 0) {
                     String s = new GpsToAddress().execute(latitude, longitude).get();
-                    if(s.contains("금오공과대학교"))
+                    if(s.contains("대학교"))
                     {
                         inSchool = true;
                     }
@@ -218,6 +218,7 @@ public class MyService extends Service {
             return _class;
         }
 
+
         public boolean isShutTime() {
             String _class = getTimeClass();
             String _day = getDayOfWeek();
@@ -225,7 +226,17 @@ public class MyService extends Service {
             {
                 String query = "select * from timetable where class='" + _class + "' and day='"+_day+"'";
                 Cursor c = db.rawQuery(query, null);
-                if(c.getCount() > 0 && (inSchool || inSplace)) // 만약 수업이 있고 학교에 있거나 지정된 장소에 있으면
+                if(c.getCount() > 0 && inSchool == true) // 만약 수업이 있고 학교에 있거나 지정된 장소에 있으면
+                {
+                    int current_mode = mAudioManager.getRingerMode();
+                    if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
+                    {
+                        prev_mode = current_mode;
+                        mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT); // 사일런스 모드로 전환
+                        mode_change_flag = true;
+                        Toast.makeText(MyService.this, "음소거로 전환합니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }else if(inSplace == true)
                 {
                     int current_mode = mAudioManager.getRingerMode();
                     if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
@@ -237,6 +248,28 @@ public class MyService extends Service {
                     }
                 }
                 else // 그게 아니라면
+                {
+                    if(mode_change_flag) // 최초 모드 전환 시만 작동
+                    {
+                        mAudioManager.setRingerMode(prev_mode);
+                        mode_change_flag = false;
+                        Toast.makeText(MyService.this, "이전 모드로 전환합니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }else
+            {
+                if(inSplace == true)
+                {
+                    int current_mode = mAudioManager.getRingerMode();
+                    if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
+                    {
+                        prev_mode = current_mode;
+                        mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT); // 사일런스 모드로 전환
+                        mode_change_flag = true;
+                        Toast.makeText(MyService.this, "음소거로 전환합니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }else
                 {
                     if(mode_change_flag) // 최초 모드 전환 시만 작동
                     {
