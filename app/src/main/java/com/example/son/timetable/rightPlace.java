@@ -90,7 +90,7 @@ public class rightPlace extends AppCompatActivity implements GoogleApiClient.OnC
 
                     if(placeLikelihood.getPlace().getName().equals("금오공대"))
                     {
-                        Toast.makeText(getApplicationContext(),"성공",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(),"성공",Toast.LENGTH_LONG).show();
                     }
 
                     // likelihood : 유사도 값

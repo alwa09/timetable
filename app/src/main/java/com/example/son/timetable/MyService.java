@@ -161,8 +161,6 @@ public class MyService extends Service {
                             inSplace = false;
                         }
                     }
-
-                    Toast.makeText(MyService.this, s, Toast.LENGTH_SHORT).show();
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();

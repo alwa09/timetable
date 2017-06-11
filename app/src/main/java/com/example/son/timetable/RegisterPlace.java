@@ -61,7 +61,7 @@ public class RegisterPlace extends AppCompatActivity {
                     GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
 
             Log.e("TAG", message);
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
