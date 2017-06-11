@@ -18,7 +18,7 @@ import android.widget.Toast;
  */
 
 public class Setting_list extends AppCompatActivity{
-    static final String[] List_Menu = {"서비스 시작", "서비스 종료", "장소", "장소 등록", "장소 삭제"};
+    static final String[] List_Menu = {"서비스 시작", "서비스 종료", "장소"};
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,15 +55,6 @@ public class Setting_list extends AppCompatActivity{
                 {
                     Intent placeListActivity = new Intent(getApplicationContext(), PlaceListActivity.class);
                     startActivity(placeListActivity);
-                }
-                else if(strText.equals("장소 등록"))
-                {
-                    Intent placeRegister = new Intent(getApplicationContext(), RegisterPlace.class);
-                    startActivity(placeRegister);
-                }else if(strText.equals("장소 삭제"))
-                {
-                    Intent placeDelete = new Intent(getApplicationContext(), DeletePlace.class);
-                    startActivity(placeDelete);
                 }
             }
         });
