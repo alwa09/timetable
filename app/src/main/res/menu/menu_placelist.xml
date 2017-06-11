@@ -5,6 +5,6 @@
     <item
         android:title=""
         android:id="@+id/menu_placeList_add"
-        android:icon="@drawable/menu_settings"
+        android:icon="@drawable/plus_icon"
         app:showAsAction="always"/>
 </menu>

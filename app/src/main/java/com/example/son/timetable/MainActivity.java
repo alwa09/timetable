@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         if (toolbar!= null){
             toolbar.setTitleTextColor(Color.BLACK);
         }
+        getSupportActionBar().setTitle("");
+
         startActivity(new Intent(this, SplashActivity.class));
         GpsPermissionCheckForMashMallo();
 
@@ -61,14 +63,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e(tag, "데이터베이스를 얻어올 수 없음");
             finish();
         }
-        /////////////////////////// 나중에 지우기
-        String sql = "drop table timetable";
-        db.execSQL(sql);
-        sql = "create table timetable(id INTEGER PRIMARY KEY AUTOINCREMENT, class TEXT, day TEXT, lecture TEXT, color INTEGER, refer INTEGER);";
-        db.execSQL(sql);
-        ///////////////////////////
-
-        select();
         updateTimeTable();
         registButtonFunc();
     }
@@ -142,17 +136,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d(tag, "dup: " + query);
         Log.d(tag, "dup: "+c.getCount());
         return c.getCount();
-    }
-    void select() // 임시 기능임
-    {
-        Cursor c = db.rawQuery("select * from timetable;", null);
-        while(c.moveToNext())
-        {
-            int id = c.getInt(0);
-            String _class = c.getString(1);
-            String day = c.getString(2);
-            String lecture = c.getString(3);
-        }
     }
 
     void showDatabase()
