@@ -150,6 +150,7 @@ public class MyService extends Service {
                     placeName = null;
                     placeName = new ArrayList<String>();
                     placeName = getStringArrayPref(getApplicationContext(),"place");
+                    inSplace = false;
                     for(int i=0; i<placeName.size(); i++)
                     {
                         String name = placeName.get(i);
@@ -157,10 +158,6 @@ public class MyService extends Service {
                         {
                             inSplace = true;
                             break;
-                        }
-                        else
-                        {
-                            inSplace = false;
                         }
                     }
                 }
