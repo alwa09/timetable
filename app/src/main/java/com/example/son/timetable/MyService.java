@@ -147,7 +147,9 @@ public class MyService extends Service {
                     {
                         inSchool = false;
                     }
-
+                    placeName = null;
+                    placeName = new ArrayList<String>();
+                    placeName = getStringArrayPref(getApplicationContext(),"place");
                     for(int i=0; i<placeName.size(); i++)
                     {
                         String name = placeName.get(i);

@@ -2,6 +2,8 @@ package com.example.son.timetable;
 
 
 import android.Manifest;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,6 +11,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -305,12 +309,43 @@ public class MainActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(this);
             alertDialog.setTitle("GPS 사용 허가 요청");
-            alertDialog.setMessage("앰버요청 발견을 알리기위해서는 사용자의 GPS 허가가 필요합니다.\n('허가'를 누르면 GPS 허가 요청창이 뜹니다.)");
+            alertDialog.setMessage("현재 위치를 알기 위해서는 사용자의 GPS 허가가 필요합니다.\n('허가'를 누르면 GPS 허가 요청창이 뜹니다.)");
             // OK 를 누르게 되면 설정창으로 이동합니다.
             alertDialog.setPositiveButton("허가",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+                        }
+                    });
+            // Cancle 하면 종료 합니다.
+            alertDialog.setNegativeButton("거절",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+            alertDialog.show();
+        }
+        requestDoNotDisturbPermissionOrSetDoNotDisturbApi23AndUp();
+    }
+
+    private void requestDoNotDisturbPermissionOrSetDoNotDisturbApi23AndUp() {
+        //TO SUPPRESS API ERROR MESSAGES IN THIS FUNCTION, since Ive no time to figrure our Android SDK suppress stuff
+        if( Build.VERSION.SDK_INT < 23 ) {
+            return;
+        }
+
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        if ( !notificationManager.isNotificationPolicyAccessGranted()) {
+            android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(this);
+            alertDialog.setTitle("알림 일시중지 서비스 허가 요청");
+            alertDialog.setMessage("음소거 모드를 사용하려면 사용자의 알림 일시정지 서비스 허가 요청이 필요합니다..\n('허가'를 누르면 요청창이 뜹니다.)");
+            // OK 를 누르게 되면 설정창으로 이동합니다.
+            alertDialog.setPositiveButton("허가",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+                            startActivity(intent);
                         }
                     });
             // Cancle 하면 종료 합니다.

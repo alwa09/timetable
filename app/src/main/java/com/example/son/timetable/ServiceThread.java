@@ -24,7 +24,8 @@ public class ServiceThread extends Thread{
         while(isRun){
             handler.sendEmptyMessage(0);//쓰레드에 있는 핸들러에게 메세지를 보냄
             try{
-                Thread.sleep(1000 * 60 * 3); //10초씩 쉰다.
+                //Thread.sleep(1000 * 60 * 3);
+                Thread.sleep(10000);
             }catch (Exception e) {}
         }
     }
