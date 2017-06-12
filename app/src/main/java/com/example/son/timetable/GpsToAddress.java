@@ -26,7 +26,7 @@ public class GpsToAddress extends AsyncTask<Double, Void, String>{
                 latitude +
                 "," +
                 longitude +
-                "&key=AIzaSyCFWWZzwj2uMfsiNSN9FLF59OJOfTH0goM";
+                "&language=ko&"; // + API 키를 덧붙여서 사용합니다.
         return apiAddress;
     }
 
