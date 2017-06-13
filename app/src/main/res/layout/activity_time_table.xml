@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="#F3F3ED"
     tools:context="com.example.son.timetable.MainActivity">
-    <TextView
+    <!---<TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -16,11 +16,11 @@
         android:textColor="@android:color/black"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="60dp"
-        android:text="시간표"/>
+        android:text="시간표"/>-->
     <TableLayout
         android:background="@android:color/white"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:shrinkColumns="0,1,2,3,4,5">
         <TableRow
@@ -32,11 +32,11 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_width="50dp"/>
-            <TextView android:text="월요일" android:textColor="@android:color/white" android:layout_height="25dp" android:background="@drawable/day_button" android:gravity="center"/>
-            <TextView android:text="화요일" android:textColor="@android:color/white" android:layout_height="25dp" android:background="@drawable/day_button" android:gravity="center"/>
-            <TextView android:text="수요일" android:textColor="@android:color/white" android:layout_height="25dp" android:background="@drawable/day_button" android:gravity="center"/>
-            <TextView android:text="목요일" android:textColor="@android:color/white" android:layout_height="25dp" android:background="@drawable/day_button" android:gravity="center"/>
-            <TextView android:text="금요일" android:textColor="@android:color/white" android:layout_height="25dp" android:background="@drawable/day_button" android:gravity="center"/>
+            <TextView android:text="월요일" android:textColor="@android:color/white" android:layout_height="match_parent" android:background="@drawable/day_button" android:gravity="center"/>
+            <TextView android:text="화요일" android:textColor="@android:color/white" android:layout_height="match_parent" android:background="@drawable/day_button" android:gravity="center"/>
+            <TextView android:text="수요일" android:textColor="@android:color/white" android:layout_height="match_parent" android:background="@drawable/day_button" android:gravity="center"/>
+            <TextView android:text="목요일" android:textColor="@android:color/white" android:layout_height="match_parent" android:background="@drawable/day_button" android:gravity="center"/>
+            <TextView android:text="금요일" android:textColor="@android:color/white" android:layout_height="match_parent" android:background="@drawable/day_button" android:gravity="center"/>
         </TableRow>
         <TableRow
             android:layout_weight="1">
@@ -48,11 +48,11 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_width="50dp"/>
-            <Button android:id="@+id/class1_monday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text=""/>
-            <Button android:id="@+id/class1_tuesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class1_wednesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class1_thursday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class1_friday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class1_monday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text=""/>
+            <Button android:id="@+id/class1_tuesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class1_wednesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class1_thursday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class1_friday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
         </TableRow>
         <TableRow
             android:layout_weight="1">
@@ -64,11 +64,11 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_width="50dp"/>
-            <Button android:id="@+id/class2_monday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class2_tuesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class2_wednesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class2_thursday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class2_friday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class2_monday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class2_tuesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class2_wednesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class2_thursday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class2_friday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
         </TableRow>
         <TableRow
             android:layout_weight="1">
@@ -80,11 +80,11 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_width="50dp"/>
-            <Button android:id="@+id/class3_monday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class3_tuesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class3_wednesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class3_thursday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class3_friday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class3_monday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class3_tuesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class3_wednesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class3_thursday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class3_friday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
         </TableRow>
         <TableRow
             android:layout_weight="1">
@@ -96,11 +96,11 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_width="50dp"/>
-            <Button android:id="@+id/class4_monday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class4_tuesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class4_wednesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class4_thursday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class4_friday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class4_monday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class4_tuesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class4_wednesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class4_thursday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class4_friday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
         </TableRow>
         <TableRow
             android:layout_weight="1">
@@ -112,11 +112,11 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_width="50dp"/>
-            <Button android:id="@+id/class5_monday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class5_tuesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class5_wednesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class5_thursday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class5_friday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class5_monday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class5_tuesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class5_wednesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class5_thursday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class5_friday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
         </TableRow>
         <TableRow
             android:layout_weight="1">
@@ -128,11 +128,11 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_width="50dp"/>
-            <Button android:id="@+id/class6_monday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class6_tuesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class6_wednesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class6_thursday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class6_friday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class6_monday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class6_tuesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class6_wednesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class6_thursday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class6_friday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
         </TableRow>
         <TableRow
             android:layout_weight="1">
@@ -144,11 +144,11 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_width="50dp"/>
-            <Button android:id="@+id/class7_monday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class7_tuesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class7_wednesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class7_thursday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class7_friday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class7_monday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class7_tuesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class7_wednesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class7_thursday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class7_friday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
         </TableRow>
         <TableRow
             android:layout_weight="1">
@@ -160,11 +160,11 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_width="50dp"/>
-            <Button android:id="@+id/class8_monday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class8_tuesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class8_wednesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class8_thursday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class8_friday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class8_monday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class8_tuesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class8_wednesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class8_thursday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class8_friday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
         </TableRow>
         <TableRow
             android:layout_weight="1">
@@ -176,11 +176,11 @@
                 android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_width="50dp"/>
-            <Button android:id="@+id/class9_monday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class9_tuesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class9_wednesday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class9_thursday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
-            <Button android:id="@+id/class9_friday" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class9_monday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class9_tuesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class9_wednesday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class9_thursday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
+            <Button android:id="@+id/class9_friday" android:layout_height="match_parent" android:textSize="10dp" android:textColor="@android:color/white" android:background="@drawable/empty_button" android:text="" />
         </TableRow>
     </TableLayout>
 </LinearLayout>

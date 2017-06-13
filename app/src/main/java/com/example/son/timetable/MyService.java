@@ -1,4 +1,4 @@
-package com.example.son.timetable;
+﻿package com.example.son.timetable;
 
 import android.Manifest;
 import android.app.PendingIntent;
@@ -139,14 +139,14 @@ public class MyService extends Service {
                 Log.d("JSON", "위도: " + latitude + " 경도: " + longitude);
                 if(latitude != 0 && longitude != 0) {
                     String s = new GpsToAddress().execute(latitude, longitude).get();
-                    if(s.contains("대학교"))
+                    /*if(s.contains("대학교"))
                     {
                         inSchool = true;
                     }
                     else
                     {
                         inSchool = false;
-                    }
+                    }*/
                     placeName = null;
                     placeName = new ArrayList<String>();
                     placeName = getStringArrayPref(getApplicationContext(),"place");
@@ -221,11 +221,10 @@ public class MyService extends Service {
         public boolean isShutTime() {
             String _class = getTimeClass();
             String _day = getDayOfWeek();
-            if(_day != null) // null이면 토요일이나 일요일이라는 거임
-            {
+            if(_day != null){ //평일
                 String query = "select * from timetable where class='" + _class + "' and day='"+_day+"'";
                 Cursor c = db.rawQuery(query, null);
-                if(c.getCount() > 0 && inSchool == true) // 만약 수업이 있고 학교에 있으면
+                if(c.getCount() > 0 && inSplace == true) // 시간이 있고 지정된 장소에도 있으면
                 {
                     int current_mode = mAudioManager.getRingerMode();
                     if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
@@ -236,7 +235,7 @@ public class MyService extends Service {
                         Toast.makeText(MyService.this, "음소거로 전환합니다.", Toast.LENGTH_SHORT).show();
                     }
                 }
-                else if(inSplace == true) // 만약 지정된 장소에 있으면
+                else if(c.getCount() == 0 && inSplace == true) // 시간이 없고 지정된 장소에 있으면
                 {
                     int current_mode = mAudioManager.getRingerMode();
                     if(current_mode == AudioManager.RINGER_MODE_VIBRATE || current_mode == AudioManager.RINGER_MODE_NORMAL)
@@ -247,7 +246,7 @@ public class MyService extends Service {
                         Toast.makeText(MyService.this, "음소거로 전환합니다.", Toast.LENGTH_SHORT).show();
                     }
                 }
-                else // 그게 아니라면
+                else if(inSplace == false)// 장소에 없으면
                 {
                     if(mode_change_flag) // 최초 모드 전환 시만 작동
                     {
@@ -257,8 +256,7 @@ public class MyService extends Service {
                     }
                 }
 
-            }
-            else // 휴일 일때
+            }else // 휴일 일때
             {
                 if(inSplace == true) // 만약 지정된 장소에 있으면
                 {

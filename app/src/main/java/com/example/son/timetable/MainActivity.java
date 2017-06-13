@@ -11,11 +11,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
-import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -24,7 +22,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     private SQLiteHelper dbHelper;
@@ -53,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         if (toolbar!= null){
             toolbar.setTitleTextColor(Color.BLACK);
         }
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("시간표");
 
         startActivity(new Intent(this, SplashActivity.class));
         GpsPermissionCheckForMashMallo();
@@ -100,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         });
         td.show();
     }
+
     void delete(String _class, String day)
     {
         String query = "select id from timetable where class='" + _class + "' and day='" + day + "';";
@@ -112,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         db.execSQL("delete from timetable where refer="+id+";");
         updateTimeTable();
     }
+
     void insert(String _class, String day, String lecture, int color) // DB에 삽입
     {
         if(checkDup(_class, day)==0)

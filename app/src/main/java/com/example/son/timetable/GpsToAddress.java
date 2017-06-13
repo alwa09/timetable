@@ -1,6 +1,5 @@
 package com.example.son.timetable;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -8,10 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -26,7 +22,7 @@ public class GpsToAddress extends AsyncTask<Double, Void, String>{
                 latitude +
                 "," +
                 longitude +
-                "&language=ko&"; // + API 키를 덧붙여서 사용합니다.
+                "&language=ko&key=AIzaSyCFWWZzwj2uMfsiNSN9FLF59OJOfTH0goM"; // + API 키를 덧붙여서 사용합니다.
         return apiAddress;
     }
 

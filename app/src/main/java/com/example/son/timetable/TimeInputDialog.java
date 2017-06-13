@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -66,6 +66,14 @@ public class TimeInputDialog extends Dialog {
         mNegativeBtn.setOnClickListener(mNegativeListener);
         mDeleteBtn.setOnClickListener(mDeleteListener);
 
+        mEdit.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode==event.KEYCODE_ENTER)
+                    return true;
+                return false;
+            }
+        });
         mColor = mColorTable[0];
         mSelectedColor.setBackgroundColor(mColor);
     }
