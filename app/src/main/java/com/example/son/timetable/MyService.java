@@ -1,4 +1,4 @@
-﻿package com.example.son.timetable;
+package com.example.son.timetable;
 
 import android.Manifest;
 import android.app.PendingIntent;
